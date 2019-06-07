@@ -42,6 +42,7 @@ router.get('/projects/:id', (req, res) => {
     })
 })
 
+// add a project
 router.post('/projects', (req, res) => {
     const newProject = req.body
     db.add(newProject)
@@ -55,7 +56,20 @@ router.post('/projects', (req, res) => {
     })
 })
 
-router.post('/projects/actions', (req, res) => {
+// get all actions list only
+router.get('/actions', (req, res) => {
+    db.findActions()
+    .then(projects => {
+        projects.length >= 1 ? res.status(200).json({success: true, projects}):
+        res.status(404).json({success: false, message: 'Sorry, no projects atm!'})
+    })
+    .catch(err => {
+        res.status(500).json(errorRef(err))
+    })
+})
+
+// add an action
+router.post('/actions', (req, res) => {
     const newAction = req.body
     db.addAction(newAction)
     .then(count => {

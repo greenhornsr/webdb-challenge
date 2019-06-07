@@ -2,6 +2,7 @@ const db = require('../data/dbConfig');
 
 module.exports = {
     find,
+    findActions,
     findById,
     findActionById,
     findPAById,
@@ -14,6 +15,10 @@ module.exports = {
 
 function find() {
     return db('projects')
+}
+
+function findActions() {
+    return db('actions')
 }
 
 function findById(id) {
