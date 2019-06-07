@@ -30,11 +30,14 @@ router.get('/projects/:id', (req, res) => {
 })
 
 // gets projects by id, with actions
-router.get('/projects/:id', (req, res) => {
+router.get('/projects/:id/actions', (req, res) => {
     const {id} = req.params
-    db.findPAById(id)
+    db.findById(id)
     .then(projects => {
-        projects ? res.status(200).json({success: true, projects}):
+        projects ? db.findActionById(id)
+        .then(actions => {
+            res.status(200).json({success: true, projects, actions})
+        }):
         res.status(404).json({success: false, message: `no project with id: ${id} located.`})
     })
     .catch(err => {
