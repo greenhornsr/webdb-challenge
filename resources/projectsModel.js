@@ -30,7 +30,7 @@ function findById(id) {
 function findActionById(id) {
     return db('actions')
     .where({id})
-    .first()
+    // .first()
 }
 
 function findPAById(id) {
