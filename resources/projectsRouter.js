@@ -4,6 +4,7 @@ const db = require('./projectsModel');
 
 router.use(express.json());
 
+// get all projects list only
 router.get('/projects', (req, res) => {
     db.find()
     .then(projects => {
@@ -15,6 +16,7 @@ router.get('/projects', (req, res) => {
     })
 })
 
+// gets projects by id, with actions
 router.get('/projects/:id', (req, res) => {
     const {id} = req.params
     db.findById(id)

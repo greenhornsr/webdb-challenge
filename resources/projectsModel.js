@@ -10,12 +10,13 @@ module.exports = {
 
 
 function find() {
-    return db('projects')
+    return db('actions')
 }
 
 function findById(id) {
-    return db('projects')
-    .where({id})
+    return db.select('projects.*', 'actions.*')
+    .from('projects')
+    .where('actions.project_id', id)
     .first()
 }
 
