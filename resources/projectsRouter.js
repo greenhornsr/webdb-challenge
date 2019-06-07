@@ -15,6 +15,18 @@ router.get('/projects', (req, res) => {
     })
 })
 
+router.get('/projects/:id', (req, res) => {
+    const {id} = req.params
+    db.findById(id)
+    .then(project => {
+        project ? res.status(200).json({success: true, project}):
+        res.status(404).json({success: false, message: `no project with id: ${id} located.`})
+    })
+    .catch(err => {
+        res.status(500).json(errorRef(err))
+    })
+})
+
 
 // error middleware
 const errorRef = (error) => {
