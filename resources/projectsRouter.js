@@ -16,13 +16,52 @@ router.get('/projects', (req, res) => {
     })
 })
 
-// gets projects by id, with actions
+// get only a project by id
 router.get('/projects/:id', (req, res) => {
     const {id} = req.params
     db.findById(id)
     .then(project => {
         project ? res.status(200).json({success: true, project}):
         res.status(404).json({success: false, message: `no project with id: ${id} located.`})
+    })
+    .catch(err => {
+        res.status(500).json(errorRef(err))
+    })
+})
+
+// gets projects by id, with actions
+router.get('/projects/:id', (req, res) => {
+    const {id} = req.params
+    db.findPAById(id)
+    .then(projects => {
+        projects ? res.status(200).json({success: true, projects}):
+        res.status(404).json({success: false, message: `no project with id: ${id} located.`})
+    })
+    .catch(err => {
+        res.status(500).json(errorRef(err))
+    })
+})
+
+router.post('/projects', (req, res) => {
+    const newProject = req.body
+    db.add(newProject)
+    .then(count => {
+        const unit = count > 1 ? 'projects': 'project';
+        count ? res.status(201).json({success: true, message: `${newProject.name} ${unit} created`, newProject}):
+        res.status(400).json({success: false, message: 'could not add new'})
+    })
+    .catch(err => {
+        res.status(500).json(errorRef(err))
+    })
+})
+
+router.post('/projects/actions', (req, res) => {
+    const newAction = req.body
+    db.addAction(newAction)
+    .then(count => {
+        const unit = count > 1 ? 'actions': 'action';
+        count ? res.status(201).json({success: true, message: `${newAction.description} ${unit} created`, newAction}):
+        res.status(400).json({success: false, message: 'could not add new'})
     })
     .catch(err => {
         res.status(500).json(errorRef(err))

@@ -15,6 +15,7 @@ exports.up = function(knex, Promise) {
         table
         .boolean('completed')
         .notNullable()
+        .defaultTo(false)
 
         table
         .timestamp('createdAt')
@@ -33,6 +34,7 @@ exports.up = function(knex, Promise) {
         tbl
         .boolean('completed')
         .notNullable()
+        .defaultTo(false)
 
         tbl
         .integer('project_id')
