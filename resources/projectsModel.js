@@ -10,7 +10,7 @@ module.exports = {
 
 
 function find() {
-    return db('')
+    return db('projects')
 }
 
 function findById(id) {

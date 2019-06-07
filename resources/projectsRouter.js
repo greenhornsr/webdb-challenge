@@ -7,7 +7,7 @@ router.use(express.json());
 router.get('/projects', (req, res) => {
     db.find()
     .then(projects => {
-        projects ? res.status(200).json({success: true, projects}):
+        projects.length >= 1 ? res.status(200).json({success: true, projects}):
         res.status(404).json({success: false, message: 'Sorry, no projects atm!'})
     })
     .catch(err => {
